@@ -1,2 +1,2 @@
-# WPT-assignment
-Transflower Flower Store web application 
+# Flower Store web application 
+WPT ASSIGNMENT
