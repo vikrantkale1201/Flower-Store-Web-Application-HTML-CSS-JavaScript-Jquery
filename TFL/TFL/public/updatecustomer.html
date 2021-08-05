@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body bgcolor="lightyellow">
+        <h1>Update Customer</h1>
+        <a href="/">Home</a> | <a href="login.html">Login</a>
+         | <a href="orders.html">Orders</a> | <a href="customers.html">Customers</a> | <a href="flowers.html">Flowers</a>
+        <hr> 
+
+        <table>
+            <tr>
+                <td><label>Customer Id :</label></td>
+                <td><input type="text" id="cid" name="cid" required /></td>
+            </tr>
+            <tr>
+                <td><label>Email ID</label></td>
+                <td><input type="email" id="email" name="email" required/></td>
+            </tr>
+            <tr>
+                <td><label>Contact No</label></td>
+                <td><input type="text" id="contact" name="contact" required/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button id="btnupdatecustomer" type="submit">Update</button></td>
+            </tr>
+       </table>
+
+       <script>
+        $(document).ready(function(){
+      var url="http://localhost:8888/api/customers";
+
+      $('#btnupdatecustomer').click(function(){
+
+                  var Cid=$("#cid").val();
+                  var Email=$("#email").val();
+                  var Contact=$("#contact").val();
+
+                  var updateCustomer={
+                      "CID":Cid,
+                      "EMAIL":Email,
+                      "CONTACTNO":Contact
+                  }
+                  console.log(updateCustomer)
+                  $.ajax({
+                              url: "/api/customers/"+Cid,
+                              type: 'PUT',
+                              dataType: "json",
+                              contentType: "application/json; charset=utf-8",
+                              data:JSON.stringify(updateCustomer),
+                              success: function (result) {
+                              console.log("Customer Info Updated ");
+                              alert("Customer Info Updated");
+
+                              },
+                              error:function(err){
+                                  console.log(err);
+                              }
+                          });
+                      });
+        });
+
+    </script>
+
+    </body>
+</html>

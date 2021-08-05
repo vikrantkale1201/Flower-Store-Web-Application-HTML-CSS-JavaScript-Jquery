@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body bgcolor="lightyellow">
+    <h1>Update Flower</h1>
+    <a href="/">Home</a> | <a href="login.html">Login</a>
+    | <a href="orders.html">Orders</a> | <a href="customers.html">Customers</a> | <a href="flowers.html">Flowers</a>
+    <hr>
+
+    <table>
+        <tr>
+            <td><label>Id :</label></td>
+            <td><input type="number" id="fid" name="id" required /></td>
+        </tr>
+        <tr>
+            <td><label>Flower Name  :</label></td>
+            <td><input type="text" id="flowername" name="flowername" required/></td>
+        </tr>
+        <tr>
+            <td><label>UnitPrice  :</label></td>
+            <td><input type="text" id="unitprice" name="unitprice" required/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button id="btnaddflower" type="submit">Update</button></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button id="btnRead" type="submit">Show All</button></td>
+        </tr>
+   </table>
+
+    <hr/>
+
+    <p id="display"></p>
+
+   <script>
+       $(document).ready(function(){
+        var url="http://localhost:8888/api/flowers";
+
+        $('#btnaddflower').click(function(){
+
+            var id=$("#fid").val();
+            var fname=$("#flowername").val();
+            var uprice=$("#unitprice").val();
+
+            var url1="/api/flowers/"+id;
+
+            var newFlower={
+                "ID":id,
+                "FNAME":fname,
+                "UNITPRICE":uprice
+            }
+            console.log(newFlower)
+            $.ajax({
+                        url: url1,
+                        type: 'PUT',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        data:JSON.stringify(newFlower),
+                        success: function (result) {
+                           console.log("Flower Updated !");
+                            alert("Flower Updated !")
+                        },
+                        error:function(err){
+                            console.log(err);
+                        }
+        });
+       });
+    });
+   </script>
+
+
+     <script>
+        $(document).ready(function() {
+
+            var url="http://localhost:8888/api/flowers";
+
+            $('#btnRead').click(function(){
+                $.ajax({
+                    url:url,
+                    type:'GET',
+                    success:function(result){
+                        console.log(result);
+                        document.getElementById("display").innerHTML = JSON.stringify(result);
+
+                    },
+                    error:function(err){
+                        console.log(err);
+                    }
+                });             
+            });
+        })
+    </script>
+</body>
+</html>

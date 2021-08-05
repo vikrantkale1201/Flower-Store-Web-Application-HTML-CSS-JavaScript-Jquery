@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body bgcolor="lightyellow">
+        <h1>Create New Order</h1>
+        <a href="/">Home</a> | <a href="login.html">Login</a>
+         | <a href="orders.html">Orders</a> | <a href="customers.html">Customers</a> | <a href="flowers.html">Flowers</a>
+        <hr> 
+
+    <table>
+        <tr>
+            <td><label>Order Id :</label></td>
+            <td><input type="text" id="oid" name="oid" required /></td>
+        </tr>
+        <tr>
+            <td><label>Order Date :</label></td>
+            <td><input type="text" id="odate" name="odate" required/></td>
+        </tr>
+        <tr>
+            <td><label>Customer ID :</label></td>
+            <td><input type="text" id="custid" name="custid" required/></td>
+        </tr>
+        <tr>
+            <td><label>Flower ID :</label></td>
+            <td><input type="text" id="flowerid" name="flowerid" required/></td>
+        </tr>
+        <tr>
+            <td><label>Quantity :</label></td>
+            <td><input type="text" id="quantity" name="quantity" required/></td>
+        </tr>
+        <tr>
+            <td><label>Amount :</label></td>
+            <td><input type="text" id="amount" name="amount" required/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button id="btnaddorder" type="submit">Place Order</button></td>
+        </tr>
+   </table>
+    <hr>
+        <p id="display"> </p>
+
+        <script>
+            
+       $(document).ready(function(){
+        var url="http://localhost:8888/api/orders";
+        var url2="http://localhost:8888/api/orderitems";
+        
+
+        $('#btnaddorder').click(function(){
+
+            var Oid=$("#oid").val();
+            var Odate=$("#odate").val();
+            var Cid=$("#custid").val();
+             var Fid=$("#flowerid").val();
+             var Qty=$("#quantity").val();
+            var Amount=$("#amount").val();
+
+            var newOrder={
+                "OID":Oid,
+                "ODATE":Odate,
+                "CID":Cid,
+                "AMOUNT":Amount
+            }
+            console.log(newOrder)
+            $.ajax({
+                        url: url,
+                        type: 'POST',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        data:JSON.stringify(newOrder),
+                        success: function (result) {
+                           console.log("new order is placed ");
+                           alert("Order Placed.");
+
+                        },
+                        error:function(err){
+                            console.log(err);
+                        }
+                    });
+             var newOrderitem={
+                "OID":Oid,
+                "FID":Fid,
+                "QUANTITY":Qty              
+            }
+            console.log(newOrderitem)
+            $.ajax({
+                        url: url2,
+                        type: 'POST',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        data:JSON.stringify(newOrderitem),
+                        success: function (result) {
+                           console.log("new order is placed ");
+                           alert("order placed successfully");
+                        },
+                        error:function(err){
+                            console.log(err);
+                        }
+                    });
+
+       });
+    });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body bgcolor="lightyellow">
+    <h1>Delete Order</h1>
+    <a href="/">Home</a> | <a href="login.html">Login</a>
+     | <a href="orders.html">Orders</a> | <a href="customers.html">Customers</a> | <a href="flowers.html">Flowers</a>
+    <hr> 
+
+    <table>
+        <tr>
+            <td><label>Order Id :</label></td>
+            <td><input type="text" id="oid" name="oid" required /></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button id="btndeleteorder" type="submit">Delete Order</button></td>
+        </tr>
+        <tr>
+            <td><label>Order Item Id :</label></td>
+            <td><input type="text" id="oiid" name="oiid" required /></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button id="btndeleteorderitem" type="submit">Delete Order Item</button></td>
+        </tr>
+        
+   </table>
+
+   <hr>
+   <button id="btnRead">Read Orders</button><br>
+   <p id="display"> </p>
+   <hr>
+   <button id="btnReadOI">Read Orders Items</button><br>
+   <p id="display1"> </p>
+    <hr/>
+
+    <script>
+        $(document).ready(function(){
+         var url="http://localhost:8888/api/orders";
+ 
+         $('#btndeleteorder').click(function(){
+ 
+             var oid=$("#oid").val();
+ 
+             var url1="/api/orders/" + oid;
+ 
+             $.ajax({
+                         url: url1,
+                         type: 'DELETE',
+                         success: function (result) {
+                            console.log("Order Deleted !");
+                             alert("Order Deleted !")
+                         },
+                         error:function(err){
+                             console.log(err);
+                         }
+         });
+        });
+     });
+    </script>
+
+    <script>
+        $(document).ready(function(){
+        var url="http://localhost:8888/api/orderitems";
+
+        $('#btndeleteorderitem').click(function(){
+
+            var oiid=$("#oiid").val();
+
+            var url1="/api/orders/" + oiid;
+
+            $.ajax({
+                        url: url1,
+                        type: 'DELETE',
+                        success: function (result) {
+                            console.log("Order Item Deleted !");
+                            alert("Order Item Deleted !")
+                        },
+                        error:function(err){
+                            console.log(err);
+                        }
+        });
+        });
+    });
+    </script>
+
+    <script>
+            $(document).ready(function() {
+
+            var url="http://localhost:8888/api/orders";
+
+            $('#btnRead').click(function(){
+                $.ajax({
+                    url:url,
+                    type:'GET',
+                    success:function(result){
+                        console.log(result);
+                        document.getElementById("display").innerHTML = JSON.stringify(result);
+                    },
+                    error:function(err){
+                        console.log(err);
+                    }
+                }); 
+
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+
+        var url="http://localhost:8888/api/orderitems";
+
+        $('#btnReadOI').click(function(){
+            $.ajax({
+                url:url,
+                type:'GET',
+                success:function(result){
+                    console.log(result);
+                    document.getElementById("display1").innerHTML = JSON.stringify(result);
+                },
+                error:function(err){
+                    console.log(err);
+                }
+            }); 
+
+        });
+    });
+
+    </script>
+
+</body>
+</html>
+   

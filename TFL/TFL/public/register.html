@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>tfl</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body bgcolor="lightyellow">
+        <h1>Register New Customer</h1>
+        <a href="/">Home</a> | <a href="login.html">Login</a>
+     | <a href="orders.html">Orders</a> | <a href="customers.html">Customers</a> | <a href="flowers.html">Flowers</a>
+        <hr/>
+
+            <table>
+                <tr>
+                    <td><label>Customer ID :</label></td>
+                    <td><input type="text" id="Cid" name="Cid" required /></td>
+                </tr>
+                <tr>
+                    <td><label>First Name  :</label></td>
+                    <td><input type="text" id="firstname" name="firstname" required/></td>
+                </tr>
+                <tr>
+                    <td><label>Last Name  :</label></td>
+                    <td><input type="text" id="lastname" name="lastname" required/></td>
+                </tr>
+                <tr>
+                    <td><label>Email  :</label></td>
+                    <td><input type="email" id="email" name="email" required/></td>
+                </tr>
+                <tr>
+                    <td><label>Contact Number  :</label></td>
+                    <td><input type="text" id="contactnumber" name="contactnumber" required/></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><button id="btnaddcustomer" type="submit">Register</button></td>
+                </tr>
+           </table>
+
+
+      <script>
+          $(document).ready(function(){
+        var url="http://localhost:8888/api/customers";
+
+        $('#btnaddcustomer').click(function(){
+
+                    var Cid=$("#Cid").val();
+                    var Fname=$("#firstname").val();
+                    var Lname=$("#lastname").val();
+                    var Email=$("#email").val();
+                    var Contact=$("#contactnumber").val();
+
+                    var newCustomer={
+                        "CID":Cid,
+                        "FIRSTNAME":Fname,
+                        "LASTNAME":Lname,
+                        "EMAIL":Email,
+                        "CONTACTNO":Contact
+                    }
+                    console.log(newCustomer)
+                    $.ajax({
+                                url: url,
+                                type: 'POST',
+                                dataType: "json",
+                                contentType: "application/json; charset=utf-8",
+                                data:JSON.stringify(newCustomer),
+                                success: function (result) {
+                                console.log("new customer added ");
+                                alert("Customer Added");
+
+                                },
+                                error:function(err){
+                                    console.log(err);
+                                }
+                            });
+                        });
+          });
+
+      </script>
+    </body>
+</html>

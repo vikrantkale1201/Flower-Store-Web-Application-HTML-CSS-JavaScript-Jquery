@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body bgcolor="lightyellow">
+        <h1>Update Customer</h1>
+        <a href="/">Home</a> | <a href="login.html">Login</a>
+         | <a href="orders.html">Orders</a> | <a href="customers.html">Customers</a> | <a href="flowers.html">Flowers</a>
+        <hr>
+        
+        <a href="register.html">Create Customer</a><br>
+        <a href="updatecustomer.html">Update Customer</a><br>
+        <a href="deletecustomer.html">Delete Customer</a><br>
+        <button id="btnRead">Read All Customers</button><br>
+        <hr>
+
+        <p id="display1"></p>
+
+        <script>
+            $(document).ready(function() {
+    
+                var url="http://localhost:8888/api/customers";
+    
+                $('#btnRead').click(function(){
+                    $.ajax({
+                        url:url,
+                        type:'GET',
+                        success:function(result){
+                            console.log(result);
+                            document.getElementById("display1").innerHTML = JSON.stringify(result);
+    
+                        },
+                        error:function(err){
+                            console.log(err);
+                        }
+                    });             
+                });
+            })
+        </script>
+    </body>
+</html>

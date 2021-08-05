@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body bgcolor="lightyellow">
+    <h1>Create Flower </h1>
+        <a href="/">Home</a> | <a href="login.html">Login</a>
+         | <a href="orders.html">Orders</a> | <a href="customers.html">Customers</a> | <a href="flowers.html">Flowers</a>
+        <hr> 
+
+    <table>
+        <tr>
+            <td><label>Id :</label></td>
+            <td><input type="number" id="fid" name="fid" required /></td>
+        </tr>
+        <tr>
+            <td><label>Flower Name  :</label></td>
+            <td><input type="text" id="flowername" name="flowername" required/></td>
+        </tr>
+        <tr>
+            <td><label>Discription  :</label></td>
+            <td><input type="text" id="description" name="description" required/></td>
+        </tr>
+        <tr>
+            <td><label>Quantity  :</label></td>
+            <td><input type="text" id="quantity" name="quantity" required/></td>
+        </tr>
+        <tr>
+            <td><label>UnitPrice  :</label></td>
+            <td><input type="text" id="unitprice" name="unitprice" required/></td>
+        </tr>
+        <tr>
+            <td><label>Likes  :</label></td>
+            <td><input type="text" id="likes" name="likes" required/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button id="btnaddflower" type="submit">AddFlower</button></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button id="btnRead">Read Flowers</button></button></td>
+        </tr>
+   </table>
+
+    <hr/>
+
+    <p id="display"></p>
+
+   <script>
+       $(document).ready(function(){
+        var url="http://localhost:8888/api/flowers";
+
+        $('#btnaddflower').click(function(){
+
+            var id=$("#fid").val();
+            var fname=$("#flowername").val();
+            var fdesc=$("#description").val();
+            var fqty=$("#quantity").val();
+            var uprice=$("#unitprice").val();
+            var flikes=$("#likes").val();
+
+            var newFlower={
+                "ID":id,
+                "FNAME":fname,
+                "DESCRIPTION":fdesc,
+                "QUANTITY":fqty,
+                "UNITPRICE":uprice,
+                "LIKES":flikes
+            }
+            console.log(newFlower)
+            $.ajax({
+                        url: url,
+                        type: 'POST',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        data:JSON.stringify(newFlower),
+                        success: function (result) {
+                           console.log("new customer is posted to server ");
+                            alert("New Flower added to server!")
+                        },
+                        error:function(err){
+                            console.log(err);
+                        }
+        });
+       });
+    });
+   </script>
+
+
+     <script>
+        $(document).ready(function() {
+
+            var url="http://localhost:8888/api/flowers";
+
+            $('#btnRead').click(function(){
+                $.ajax({
+                    url:url,
+                    type:'GET',
+                    success:function(result){
+                        console.log(result);
+                        document.getElementById("display").innerHTML = JSON.stringify(result);
+
+                    },
+                    error:function(err){
+                        console.log(err);
+                    }
+                });             
+            });
+        })
+    </script>
+</body>
+</html>

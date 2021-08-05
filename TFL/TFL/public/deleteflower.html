@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body bgcolor="lightyellow">
+    <h1>Delete Flowers</h1>
+    <a href="/">Home</a> | <a href="login.html">Login</a>
+     | <a href="orders.html">Orders</a> | <a href="customers.html">Customers</a> | <a href="flowers.html">Flowers</a>
+    <hr>
+
+    <table>
+        <tr>
+            <td><label>Id :</label></td>
+            <td><input type="number" id="fid" name="id" required /></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button id="btndeleteflower" type="submit">Delete</button></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button id="btnRead" type="submit">Show All</button></td>
+        </tr>
+   </table>
+
+    <hr/>
+
+    <p id="display"></p>
+
+   <script>
+       $(document).ready(function(){
+        var url="http://localhost:8888/api/flowers";
+
+        $('#btndeleteflower').click(function(){
+
+            var id=$("#fid").val();
+
+            var url1="/api/flowers/"+id;
+
+            $.ajax({
+                        url: url1,
+                        type: 'DELETE',
+                        success: function (result) {
+                           console.log("Flower Deleted !");
+                            alert("Flower Deleted !")
+                        },
+                        error:function(err){
+                            console.log(err);
+                        }
+        });
+       });
+    });
+   </script>
+
+
+    <script>
+        $(document).ready(function() {
+
+            var url="http://localhost:8888/api/flowers";
+
+            $('#btnRead').click(function(){
+                $.ajax({
+                    url:url,
+                    type:'GET',
+                    success:function(result){
+                        console.log(result);
+                        document.getElementById("display").innerHTML = JSON.stringify(result);
+
+                    },
+                    error:function(err){
+                        console.log(err);
+                    }
+                });             
+            });
+        })
+    </script>
+</body>
+</html>

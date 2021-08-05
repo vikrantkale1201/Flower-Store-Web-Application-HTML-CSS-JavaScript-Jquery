@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body bgcolor="lightyellow">
+        <h1>Update Order</h1>
+        <a href="/">Home</a> | <a href="login.html">Login</a>
+         | <a href="orders.html">Orders</a> | <a href="customers.html">Customers</a> | <a href="flowers.html">Flowers</a>
+        <hr> 
+
+    <table>
+        <tr>
+            <td><label>Order Id :</label></td>
+            <td><input type="text" id="oid" name="oid" required /></td>
+        </tr>
+        <tr>
+            <td><label>Order Item Id :</label></td>
+            <td><input type="text" id="oiid" name="oiid" required /></td>
+        </tr>
+        <tr>
+            <td><label>Flower ID :</label></td>
+            <td><input type="text" id="flowerid" name="flowerid" required/></td>
+        </tr>
+        <tr>
+            <td><label>Quantity :</label></td>
+            <td><input type="text" id="quantity" name="quantity" required/></td>
+        </tr>
+        <tr>
+            <td><label>Amount :</label></td>
+            <td><input type="text" id="amount" name="amount" required/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button id="btnaddorder" type="submit">Update Order</button></td>
+        </tr>
+   </table>
+    <hr>
+        <p id="display"> </p>
+
+        <script>
+            
+            $(document).ready(function(){
+             var url="http://localhost:8888/api/orders";
+             var url2="http://localhost:8888/api/orderitems";
+             
+     
+             $('#btnaddorder').click(function(){
+     
+                 var Oid=$("#oid").val();
+                 var Oiid=$("#oiid").val();
+                 var Fid=$("#flowerid").val();
+                 var Qty=$("#quantity").val();
+                 var Amount=$("#amount").val();
+     
+                 var updateOrder={
+                     "OID":Oid,
+                     "AMOUNT":Amount
+                 }
+                 var url1="/api/orders/"+ Oid;
+                 console.log(updateOrder)
+                 $.ajax({
+                             url: url1,
+                             type: 'PUT',
+                             dataType: "json",
+                             contentType: "application/json; charset=utf-8",
+                             data:JSON.stringify(updateOrder),
+                             success: function (result) {
+                                console.log("updated order successfully ");
+                                alert("Order Updated.")
+                             },
+                             error:function(err){
+                                 console.log(err);
+                             }
+                         });
+
+                 var url3="/api/orderitems/"+ Oiid;
+                 var updateOrderitem={
+                     "OIID":Oiid,
+                     "FID":Fid,
+                     "QUANTITY":Qty              
+                 }
+                 console.log(updateOrderitem)
+                 $.ajax({
+                             url: url3,
+                             type: 'PUT',
+                             dataType: "json",
+                             contentType: "application/json; charset=utf-8",
+                             data:JSON.stringify(updateOrderitem),
+                             success: function (result) {
+                                console.log("updated order successfully ");
+                                alert("updated orderitem successfully");
+                             },
+                             error:function(err){
+                                 console.log(err);
+                             }
+                         });    
+            });
+         });
+             </script>

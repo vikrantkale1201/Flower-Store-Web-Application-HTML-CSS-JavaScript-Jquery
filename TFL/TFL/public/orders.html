@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body bgcolor="lightyellow">
+        <h1>Orders Details </h1>
+        <a href="/">Home</a> | <a href="login.html">Login</a>
+         | <a href="orders.html">Orders</a> | <a href="customers.html">Customers</a> | <a href="flowers.html">Flowers</a>
+        
+        <hr> 
+        <a href="createorder.html">Create Orders</a><br>
+        <a href="updateorder.html">Update Orders</a><br>
+        <a href="deleteorder.html">Delete Orders</a><br>
+        <hr>
+        <table>
+            <tr>
+                <td><label>Order Id :</label></td>
+                <td><input type="text" id="oid" name="oid" required /></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button id="btnorderbyid" type="submit">Show Order</button></td>
+            </tr>
+        </table>
+        <br>
+        <p id="display2"> </p>
+        <hr>
+        <button id="btnRead">Read All Orders</button><br>
+        <p id="display"> </p>
+        <hr>
+        <button id="btnReadOI">Read All Orders Items</button><br>
+        <p id="display1"> </p>
+
+        
+
+
+    <script>
+            $(document).ready(function() {
+
+            var url="http://localhost:8888/api/orders";
+
+            $('#btnRead').click(function(){
+                $.ajax({
+                    url:url,
+                    type:'GET',
+                    success:function(result){
+                        console.log(result);
+                        document.getElementById("display").innerHTML = JSON.stringify(result);
+                    },
+                    error:function(err){
+                        console.log(err);
+                    }
+                }); 
+
+            });
+       });
+     
+    </script>
+
+<script>
+    $(document).ready(function() {
+
+    var url="http://localhost:8888/api/orderitems";
+
+    $('#btnReadOI').click(function(){
+        $.ajax({
+            url:url,
+            type:'GET',
+            success:function(result){
+                console.log(result);
+                document.getElementById("display1").innerHTML = JSON.stringify(result);
+            },
+            error:function(err){
+                console.log(err);
+            }
+        }); 
+
+    });
+});
+
+</script>
+
+<script>
+    $(document).ready(function() {
+
+    var url="http://localhost:8888/api/orders";
+
+    var oid=$("#oid").val();
+    console.log(oid);
+
+    $('#btnorderbyid').click(function(){
+        $.ajax({
+            url:"/api/orders/"+oid,
+            type:'GET',
+            success:function(result){
+                console.log(result);
+                document.getElementById("display2").innerHTML = JSON.stringify(result);
+            },
+            error:function(err){
+                console.log(err);
+            }
+        }); 
+
+    });
+});
+
+</script>
+    </body>
+</html>
+   
